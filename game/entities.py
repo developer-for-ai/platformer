@@ -7,6 +7,8 @@ class Enemy:
     def __init__(self, x, y, enemy_type="walker"):
         self.x = x
         self.y = y
+        self.start_x = x  # Store original position
+        self.start_y = y  # Store original position
         self.width = ENEMY_SIZE
         self.height = ENEMY_SIZE
         self.vel_x = ENEMY_SPEED
@@ -19,7 +21,6 @@ class Enemy:
         if enemy_type == "walker":
             self.color = RED
             self.patrol_distance = 100
-            self.start_x = x
         elif enemy_type == "jumper":
             self.color = ORANGE
             self.jump_timer = 0
@@ -28,7 +29,6 @@ class Enemy:
             self.color = PURPLE
             self.float_amplitude = 30
             self.float_speed = 2.0
-            self.start_y = y
     
     def update(self, dt, platforms, player):
         if not self.alive:

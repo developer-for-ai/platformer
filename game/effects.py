@@ -102,6 +102,10 @@ class ParticleSystem:
         """Update all particles and remove dead ones"""
         self.particles = [p for p in self.particles if p.update(dt)]
     
+    def clear(self):
+        """Clear all particles"""
+        self.particles.clear()
+    
     def render(self, screen):
         """Render all particles"""
         for particle in self.particles:
@@ -240,6 +244,13 @@ class VisualEffects:
             offset_y = random.uniform(-self.screen_shake, self.screen_shake)
             return (int(offset_x), int(offset_y))
         return (0, 0)
+    
+    def clear(self):
+        """Clear all effects"""
+        self.particle_system.clear()
+        self.animated_texts.clear()
+        self.screen_shake = 0.0
+        self.screen_shake_duration = 0.0
     
     def update(self, dt):
         self.particle_system.update(dt)

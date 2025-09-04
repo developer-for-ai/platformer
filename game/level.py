@@ -59,11 +59,10 @@ class Level:
             self.powerups.append(powerup)
     
     def update(self, dt, player):
-        # Update enemies
-        for enemy in self.enemies[:]:
-            enemy.update(dt, self.platforms, player)
-            if not enemy.alive:
-                self.enemies.remove(enemy)
+        # Update enemies (don't remove dead ones so they can be reset)
+        for enemy in self.enemies:
+            if enemy.alive:
+                enemy.update(dt, self.platforms, player)
         
         # Update collectibles
         for crystal in self.crystals:
@@ -150,7 +149,8 @@ class Level:
         
         # Draw entities
         for enemy in self.enemies:
-            enemy.render(screen)
+            if enemy.alive:
+                enemy.render(screen)
         
         for crystal in self.crystals:
             crystal.render(screen)
@@ -332,6 +332,24 @@ class Level:
         
         for powerup in self.powerups:
             powerup.collected = False
+    
+    def reset_enemies(self):
+        """Reset all enemies to their starting positions and states"""
+        for enemy in self.enemies:
+            enemy.alive = True
+            enemy.x = enemy.start_x
+            enemy.y = enemy.start_y
+            enemy.vel_y = 0
+            enemy.animation_timer = 0
+            
+            # Reset type-specific properties
+            if enemy.type == "walker":
+                enemy.vel_x = ENEMY_SPEED if enemy.vel_x > 0 else -ENEMY_SPEED
+            elif enemy.type == "jumper":
+                enemy.vel_x = 0
+                enemy.jump_timer = 0
+            elif enemy.type == "flyer":
+                enemy.vel_x = 0
 
 
 class LevelManager:

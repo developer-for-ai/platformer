@@ -124,6 +124,9 @@ class GameEngine:
         self.restart_game()
     
     def restart_game(self):
+        # Clear effects
+        effects.clear()
+        
         self.player = Player(50, SCREEN_HEIGHT - 100)  # Start higher up
         self.level_manager = LevelManager()
         self.game_timer = 0
@@ -131,8 +134,18 @@ class GameEngine:
         self.state = "playing"
     
     def restart_level(self):
+        # Clear effects
+        effects.clear()
+        
+        # Reset level collectibles and enemies FIRST
+        if self.current_level:
+            self.current_level.reset_collectibles()
+            self.current_level.reset_enemies()
+        
+        # Reset player
         self.player.respawn()
         self.player.lives = MAX_LIVES
+        
         # Reset player power-ups
         self.player.has_double_jump = False
         self.player.double_jump_used = False
@@ -140,15 +153,28 @@ class GameEngine:
         self.player.speed_boost_timer = 0
         self.player.has_shield = False
         self.player.shield_timer = 0
-        # Reset level collectibles
+        
+        # Reset level timer
         if self.current_level:
-            self.current_level.reset_collectibles()
-        self.load_level()
+            self.level_timer = self.current_level.time_limit
+        
         self.state = "playing"
     
     def next_level(self):
+        # Clear effects when transitioning to next level
+        effects.clear()
+        
         next_level = self.level_manager.next_level()
         if next_level:
+            # Reset lives and power-ups for new level
+            self.player.lives = MAX_LIVES
+            self.player.has_double_jump = False
+            self.player.double_jump_used = False
+            self.player.has_speed_boost = False
+            self.player.speed_boost_timer = 0
+            self.player.has_shield = False
+            self.player.shield_timer = 0
+            
             self.load_level()
             self.state = "playing"
         else:
