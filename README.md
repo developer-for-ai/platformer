@@ -1,36 +1,65 @@
 # Crystal Quest
 
-A 2D platformer game built with Python and Pygame. Collect crystals, avoid enemies, and complete 5 challenging levels.
+A 2D platformer game built with Python and Pygame. Navigate through 5 levels, collect crystals, avoid enemies, and reach the end of each stage.
 
 ## Quick Start
 
-**Unix/Linux/macOS:** `./build.sh play`  
-**Windows:** `build.bat play`  
-**Cross-platform:** `python3 build.py play`
+**Just want to play?** Run one of these commands:
 
-## Controls
+- **Mac/Linux:** `./build.sh play`
+- **Windows:** `build.bat play`  
+- **Any platform:** `python3 build.py play`
 
-- **Movement:** Arrow Keys or WASD
-- **Jump:** Spacebar, Up Arrow, or W
+The game will automatically install everything needed and start.
+
+## Game Basics
+
+**Goal:** Collect all crystals in each level and reach the exit before time runs out.
+
+**Controls:**
+- **Move:** Arrow keys or WASD
+- **Jump:** Spacebar, Up arrow, or W
 - **Pause:** ESC or P
 
-## Commands
+**What to collect:**
+- **Crystals:** Required to complete levels
+- **Coins:** Extra points
+- **Power-ups:** Green (double jump), Yellow (speed), Cyan (shield)
 
-| Command | Description |
+## Build Commands
+
+All three build scripts support the same commands:
+
+| Command | What it does |
 |---------|-------------|
-| `play` | Quick play (default) |
-| `run` | Run with output |
-| `setup` | Install dependencies |
-| `clean` | Clean build files |
-| `package` | Create executable |
-| `test` | Run tests |
+| `play` | Start the game (auto-setup if needed) |
+| `run` | Start with detailed messages |
+| `setup` | Install Python dependencies |
+| `clean` | Remove temporary files |
+| `package` | Create standalone executable |
+| `test` | Check that everything works |
+| `help` | Show command list |
 
-## Manual Install
+**Examples:**
+```bash
+./build.sh setup     # First-time setup
+./build.sh play      # Quick play
+./build.sh package   # Create .exe file
+```
+
+## Manual Setup (Alternative)
+
+If you prefer to set up manually:
 
 ```bash
 python3 -m venv game_env
-source game_env/bin/activate  # Windows: game_env\Scripts\activate
+source game_env/bin/activate    # Windows: game_env\Scripts\activate
 pip install -r requirements.txt
 python main.py
 ```
+
+## Requirements
+
+- Python 3.7 or newer
+- That's it! Everything else installs automatically.
 
